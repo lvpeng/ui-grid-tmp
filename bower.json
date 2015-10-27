@@ -1,0 +1,10 @@
+{
+	"name" : "ui-grid",
+	"dependencies": {
+		"angular": "1.4.6",
+		"angular-ui-grid": "3.0.7",
+		"bootstrap": "3.3.4",
+		"font-awesome": "4.4.0",
+		"less": "2.5.3"
+	}
+}

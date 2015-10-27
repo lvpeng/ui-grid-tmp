@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="bower_components/angular-ui-grid/ui-grid.min.css"/>
+    <link rel="stylesheet" href="app/css/main.css">
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="app/js/app.js"></script>
+  </head>
+  <body ng-controller="tableCtrl">
+  <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <!-- <th class="td-name text-center">科目</th> -->
+              <th class="td-name text-center">帐目</th>
+              <th class="td-direction text-center">管＋小提示</th>
+              <th class="text-center">金额</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <!-- <td>1002</td> -->
+              <td>
+                <h5 class="main_title">库存现金</h5>
+                <p class="sub_title">现金日常支付</p>
+              </td>
+              <td class="vertical-align">企业现金剩余金额</td>
+              <td class="form-inline vertical-align">
+                <input type="text" class="form-control" placeholder="现金剩余金额">
+              </td>
+            </tr>
+            <tr >
+              <td ng-click="toggleOpen()">
+                <h5 class="main_title">银行存款</h5>
+                <p class="sub_title">银行款项</p>
+              </td>
+              <td class="vertical-align">企业有哪些银行账户，帮助您记录收入与支出</td>
+              <td class="vertical-align">
+                <button class="btn btn-success" ng-click="addNewBank()">add</button>
+                <button class="btn btn-danger" ng-click="delBank()">delete</button>
+                <!-- <button class="btn btn-success" id="save" ng-click="saveRow()">Save</button> -->
+              </td>
+            </tr>
+
+            <tr ng-show="showGrid">
+              <td colspan="3" >
+                <div class="bankGrid" ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit></div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">应收账款</h5>
+                <p class="sub_title">销售未收回</p>
+              </td>
+              <td class="vertical-align">销售过程中，哪些客户未结清款项</td>
+              <td class="vertical-align">
+                <button class="btn btn-success" ng-click="add2()">add</button>
+              </td>
+            </tr>
+            <!--<tr>-->
+            <!--<td class="vertical-align">-->
+            <!--<input type="text" class="form-control" placeholder="企业名称">-->
+            <!--</td>-->
+            <!--<td class="vertical-align">-->
+            <!--<input type="text" class="form-control" placeholder="请输入金额">-->
+            <!--</td>-->
+            <!--</tr>-->
+            <tr>
+              <td>
+                <h5 class="main_title">预收款项</h5>
+                <p class="sub_title">销售预收款项</p>
+              </td>
+              <td class="vertical-align">销售过程中，哪些客户先行支付销售款项</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">其他应收款</h5>
+                <p class="sub_title">员工备用金或借给其他企业款项</p>
+              </td>
+              <td class="vertical-align">非销售业务，与其他企业或员工产生的未收款项，如借出款</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">库存商品</h5>
+                <p class="sub_title">存货</p>
+              </td>
+              <td class="vertical-align">库存哪类商品以及价值</td>
+              <td class="vertical-align text-left">
+                <strong>0.00</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">固定资产</h5>
+                <p class="sub_title">单价 &gt 5000元</p>
+              </td>
+              <td class="vertical-align">固定资产可以进行统计，方便您有效管理</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">应付款项</h5>
+                <p class="sub_title">未支付供应商的款项</p>
+              </td>
+              <td class="vertical-align">采购或费用支出，企业未付哪些款项</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">预付款项</h5>
+                <p class="sub_title">采购或费用支出预先支付的款项</p>
+              </td>
+              <td class="vertical-align">采购或费用支出，企业支付的定金</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">其他应付款</h5>
+                <p class="sub_title">员工垫资或向其他企业</p>
+              </td>
+              <td class="vertical-align">非销售业务，与其他企业或员工产生的未支付款项，如企业借款</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">实收资本</h5>
+                <p class="sub_title">法定注册资本</p>
+              </td>
+              <td class="vertical-align">企业成立时，实缴人及注册金额</td>
+              <td class="vertical-align text-left">
+                <strong>0.00</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">投资性项目</h5>
+                <p class="sub_title">包含股票、理财、债券等</p>
+              </td>
+              <td class="vertical-align">添加企业日常投资活动</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">融资性项目</h5>
+                <p class="sub_title">企业贷款、企业间贷款</p>
+              </td>
+              <td class="vertical-align">企业日常融资活动</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">企业收入</h5>
+                <p class="sub_title">销售或提供服务</p>
+              </td>
+              <td class="vertical-align">提供销售商品或提供服务所产生的收入金额及项目</td>
+              <td class="vertical-align text-left">
+                <strong>0.00</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">企业成本</h5>
+                <p class="sub_title">销售或服务的成本</p>
+              </td>
+              <td class="vertical-align">销售商品成本或提供服务的成本</td>
+              <td class="vertical-align text-left">
+                <strong>0.00</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">企业费用</h5>
+                <p class="sub_title">费用支出</p>
+              </td>
+              <td class="vertical-align">企业运营中所产生的费用</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h5 class="main_title">其他项</h5>
+                <p class="sub_title">费用支出</p>
+              </td>
+              <td class="vertical-align">其他费用支出</td>
+              <td class="vertical-align">
+                <button class="btn">点击添加</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- <uib-accordion>
+          <uib-accordion-group is-open="status.open">
+            <uib-accordion-heading>
+              I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+            </uib-accordion-heading>
+            This is just some content to illustrate fancy headings.
+          </uib-accordion-group>
+      </uib-accordion> -->
+      </div>
+  </body>
+</html>
